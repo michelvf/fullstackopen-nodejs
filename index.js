@@ -80,12 +80,43 @@ app.get('/api/notes/:id', (request, response) => {
   }
 })
 
+// Delete a Note
 app.delete('/api/notes/:id', (request, response) => {
   const id = Number(request.params.id)
   notes = notes.filter(note => note.id !== id)
 
   response.status(204).end()
 })
+
+// Update a Note
+app.put('/api/notes/:id', (req, res) => {
+  console.log('*** Voy a hacer un PUT ****')
+  const id = Number(req.params.id)
+  const body = req.body
+
+  console.log('llegaron desde el Frontend: ', body)
+
+  note = notes.find(note => note.id == id)
+
+  const noteUpdate = {
+    id: id,
+    content: body.content,
+    important: body.important
+  }
+
+  const noteIndex = notes.indexOf(note)
+
+  console.log('voy a cambiar lo que está en el índice: ', noteIndex, ' y poner: ', noteUpdate)
+
+  notes.splice(noteIndex, 1, noteUpdate)
+
+  console.log('ya se cambió todo, y quedó: ')
+  console.log(notes)
+
+  res.status(201).json({ 'message': "data updated" })
+})
+
+
 
 app.use(unknownEndpoint)
 
