@@ -90,11 +90,9 @@ app.delete('/api/notes/:id', (request, response) => {
 
 // Update a Note
 app.put('/api/notes/:id', (req, res) => {
-  console.log('*** Voy a hacer un PUT ****')
+
   const id = Number(req.params.id)
   const body = req.body
-
-  console.log('llegaron desde el Frontend: ', body)
 
   note = notes.find(note => note.id == id)
 
@@ -106,12 +104,7 @@ app.put('/api/notes/:id', (req, res) => {
 
   const noteIndex = notes.indexOf(note)
 
-  console.log('voy a cambiar lo que está en el índice: ', noteIndex, ' y poner: ', noteUpdate)
-
   notes.splice(noteIndex, 1, noteUpdate)
-
-  console.log('ya se cambió todo, y quedó: ')
-  console.log(notes)
 
   res.status(201).json({ 'message': "data updated" })
 })
